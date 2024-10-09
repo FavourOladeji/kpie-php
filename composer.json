@@ -1,0 +1,15 @@
+{
+    "name": "pc/kpie",
+    "autoload": {
+        "psr-4": {
+            "Pc\\Kpie\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Favour Oladeji",
+            "email": "oladejifavour100@gmail.com"
+        }
+    ],
+    "require": {}
+}
