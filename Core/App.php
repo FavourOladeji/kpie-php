@@ -39,7 +39,7 @@ class App
     public function make($key)
     {
         //Check if it is a singleton
-        if (isset($this->singletons[$key])) {
+        if (array_key_exists($key, $this->singletons)) {
             if ($this->singletons[$key] === null) {
                 $this->singletons[$key] = $this->resolve($key);
             }
@@ -51,7 +51,7 @@ class App
 
     protected function resolve($key)
     {
-        if (isset($this->bindings[$key])) {
+        if (array_key_exists($key, $this->bindings)) {
             $resolver = $this->bindings[$key];
             if (is_callable($resolver)) {
                 return $resolver($this);
@@ -63,6 +63,6 @@ class App
     }
 
     private function __clone() {}
-    private function __wakeup() {}
+    public function __wakeup() {}
 
 }
