@@ -53,7 +53,7 @@ class App
     {
         if (array_key_exists($key, $this->bindings)) {
             $resolver = $this->bindings[$key];
-            if (is_callable($resolver)) {
+            if ($resolver instanceof \Closure) {
                 return $resolver($this);
             }
             return new $resolver();
