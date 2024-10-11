@@ -1,9 +1,13 @@
 {
-    "name": "pc/kpie",
+    "name": "favour/kpie",
     "autoload": {
         "psr-4": {
-            "Pc\\Kpie\\": "src/"
-        }
+            "Core\\": "Core/",
+            "Http\\": "Http/"
+        },
+        "files": [
+            "Core/helpers.php"
+        ]
     },
     "authors": [
         {
