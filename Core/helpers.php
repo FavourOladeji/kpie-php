@@ -1,5 +1,7 @@
 <?php
 
+use Core\App;
+
 if (!function_exists('base_path'))
 {
     function base_path(string $path)
@@ -37,5 +39,28 @@ function abort($code = 404)
 
     die();
 }
+
+function config($key, $default = null)
+{
+    $config = require base_path('config.php');
+    if (array_key_exists($key, $config))
+    {
+        return $config[$key];
+    }
+    return $default;
+
+}
+
+function app($key=null)
+{
+    $app = App::getInstance();
+    return $key ? $app->make($key) : $app;
+}
+
+function db()
+{
+    return app('database');
+}
+
 
 
