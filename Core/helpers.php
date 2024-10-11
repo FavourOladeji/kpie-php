@@ -43,12 +43,21 @@ function abort($code = 404)
 function config($key, $default = null)
 {
     static $config = [];
-    $config ?: require base_path('config.php');
-    if (array_key_exists($key, $config))
-    {
-        return $config[$key];
+    $config = $config ?: require base_path('config.php');
+    //Handle dot notation;
+    $keys = explode('.', $key);
+    $value = $config;
+    foreach ($keys as $k)
+    {  
+        if (array_key_exists($k, $value))
+        {
+            $value = $config[$k];
+        } else {
+            return $default;
+        }
+
     }
-    return $default;
+    return $value;
 
 }
 
