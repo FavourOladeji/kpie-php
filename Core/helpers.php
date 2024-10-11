@@ -42,7 +42,8 @@ function abort($code = 404)
 
 function config($key, $default = null)
 {
-    $config = require base_path('config.php');
+    static $config = [];
+    $config ?: require base_path('config.php');
     if (array_key_exists($key, $config))
     {
         return $config[$key];
