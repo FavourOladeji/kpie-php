@@ -11,7 +11,7 @@ class RouteServiceProvider
     public static function register()
     {
         //Require_once all the files in the routes directory;
-        $routes = base_path('routes');
+        // $routes = base_path('routes');
         require base_path('routes/web.php');
     }
 
@@ -19,8 +19,17 @@ class RouteServiceProvider
      * Handle and redirect all routes appropriately
      * @return void
      */
-    public function handle()
+    public static function handle()
     {
+        self::register();
 
+        /**
+         * @var Router
+         */
+        $router = app('router');
+        $uri = parse_url($_SERVER["REQUEST_URI"])['path'];
+        $method = $_POST['_method'] ?? $_SERVER['REQUEST_METHOD'];
+       
+        $router->route($uri, $method); 
     }
 }

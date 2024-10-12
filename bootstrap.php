@@ -17,6 +17,5 @@ $app->singleton('database', function ($app){
     return new Database($config, $config['username'], $config['password']);
 });
 
-
-RouteServiceProvider::register();
+RouteServiceProvider::handle();
 // dd($config);
