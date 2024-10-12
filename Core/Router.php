@@ -13,7 +13,7 @@ class Router{
     {
         [$controllerClass, $controllerMethod] = $action;
         $this->routes[] = [
-            'uri' => $uri,
+            'uri' => trim($uri, '/'),
             'method' => $method,
             'controller_class' => $controllerClass,
             'controller_method' => $controllerMethod,
@@ -59,7 +59,7 @@ class Router{
     public function route($uri, $method)
     {
         $route = array_filter($this->routes, function (array $routeArray) use($uri, $method) {
-            return trim($routeArray['uri'], '/') == trim($uri, '/') && $routeArray['method'] == strtoupper($method);
+            return $routeArray['uri'] == trim($uri, '/') && $routeArray['method'] == strtoupper($method);
         });
 
         if  (!$route)
