@@ -1,10 +1,17 @@
 <?php
 
 use Core\Router;
+use Http\Controllers\HomePageController;
 use Http\Controllers\LoginController;
 
-$router = new Router();
 
-$router->get('login', [LoginController::class, 'index']);
-$router->post('login', [LoginController::class, 'store']);
-echo "Reached here";
+/**
+ * @var Router
+ */
+$router = app('router');
+
+
+$router->get('login', [LoginController::class, 'index'])->middleware('auth');
+$router->get('', [HomePageController::class, 'index']);
+
+
