@@ -12,7 +12,7 @@ if (!function_exists('base_path'))
 
 if (!function_exists('dd'))
 {
-    function dd($payload)
+    function dd($payload = '')
     {
        dump($payload);
        die();
@@ -51,7 +51,7 @@ function config($key, $default = null)
     {  
         if (array_key_exists($k, $value))
         {
-            $value = $config[$k];
+            $value = $value["$k"];
         } else {
             return $default;
         }
@@ -77,11 +77,17 @@ function view(string $path, array $attributes = [])
     $viewFilename = base_path("views/{$path}.php");
     if (!file_exists($viewFilename))
     {
-        throw new Exception("The view '$path'.php does not exist");
+        throw new Exception("The view '$path.php' does not exist");
     }
     
     extract($attributes);
     require_once $viewFilename;
+}
+
+function asset($path)
+{
+    $appUrl = config('app.url'); 
+    return "{$appUrl}/assets/{$path}";
 }
 
 
