@@ -2,6 +2,10 @@
 
 namespace Core;
 
+use Core\Middleware\Middleware;
+use Exception;
+use ReflectionMethod;
+
 class Router{
     public array $routes  = [];
 
@@ -50,5 +54,55 @@ class Router{
     {
         $this->routes[array_key_last($this->routes)]['middleware'] = $middleware;
         return $this;
+    }
+
+    public function route($uri, $method)
+    {
+        $route = array_filter($this->routes, function (array $routeArray) use($uri, $method) {
+            return trim($routeArray['uri'], '/') == trim($uri, '/') && $routeArray['method'] == strtoupper($method);
+        });
+
+        if  (!$route)
+        {
+            abort(404);
+        }
+
+        $route = reset($route);
+
+        Middleware::resolve($route['middleware']);
+
+        $controllerClass = $route['controller_class'];
+        $controllerMethod = $route['controller_method'];
+        if (!class_exists($controllerClass))
+        {
+            throw new Exception("Controller class '$controllerClass' does not exist");
+        }
+
+        if (!method_exists($controllerClass, $controllerMethod))
+        {
+            throw new Exception("Method '$controllerMethod' does not exist in controller class '$controllerClass'");
+        }
+
+        
+
+        $hasRequestParameter = $this->checkIfControllerHasRequestParameter($controllerClass, $controllerMethod);
+        $controller = new $controllerClass();
+        $hasRequestParameter ? $controller->{$controllerMethod}(new Request()) : $controller->{$controllerMethod}() ;
+        die();
+        
+    }
+
+    private function checkIfControllerHasRequestParameter($controller, $method)
+    {
+        $reflectionMethod = new ReflectionMethod($controller, $method);
+        $parameters = $reflectionMethod->getParameters();
+        $firstParameter = reset($parameters);
+        if ($firstParameter && ($parameterType = $firstParameter->getType()) && $parameterType->getName() == Request::class)
+        {
+            return true;
+        }
+    
+        return false;
+
     }
 }
