@@ -72,5 +72,17 @@ function db()
     return app('database');
 }
 
+function view(string $path, array $attributes = [])
+{
+    $viewFilename = base_path("views/{$path}.php");
+    if (!file_exists($viewFilename))
+    {
+        throw new Exception("The view '$path'.php does not exist");
+    }
+    
+    extract($attributes);
+    require_once $viewFilename;
+}
+
 
 
