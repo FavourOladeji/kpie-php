@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Middleware;
+namespace App\Http\Middleware;
 
 class Guest implements MiddlewareInterface
 {

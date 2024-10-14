@@ -1,11 +1,10 @@
 <?php
 
-namespace Core\Middleware;
+namespace App\Http\Middleware;
 
 class Authenticated implements MiddlewareInterface
 {
     public function handle()
     {
-       var_dump('authenticated');
     }
 }

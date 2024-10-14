@@ -2,7 +2,7 @@
 
 namespace Core;
 
-use Core\Middleware\Middleware;
+use App\Http\Middleware\Middleware;
 use Exception;
 use ReflectionMethod;
 
