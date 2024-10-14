@@ -91,9 +91,25 @@ class Router{
 
         
 
-        $hasRequestParameter = $this->checkIfControllerHasRequestParameter($controllerClass, $controllerMethod);
+        $requestParameterClassName = $this->checkIfControllerHasRequestParameter($controllerClass, $controllerMethod);
+        
         $controller = new $controllerClass();
-        $hasRequestParameter ? $controller->{$controllerMethod}(new Request()) : $controller->{$controllerMethod}() ;
+        if (!$requestParameterClassName)
+        {
+            $controller->{$controllerMethod}();
+            die();
+        }
+        /**
+         * @var RequestInterface
+         */
+        $requestParameterClass = new $requestParameterClassName();
+
+        if (!$requestParameterClass->authorize())
+        {
+            abort(403);
+        }
+
+        $controller->{$controllerMethod}($requestParameterClass);
         die();
         
     }
@@ -103,9 +119,9 @@ class Router{
         $reflectionMethod = new ReflectionMethod($controller, $method);
         $parameters = $reflectionMethod->getParameters();
         $firstParameter = reset($parameters);
-        if ($firstParameter && ($parameterType = $firstParameter->getType()) && $parameterType->getName() == Request::class)
+        if ($firstParameter && ($parameterType = $firstParameter->getType()) && is_a($parameterClass = $parameterType->getName(),  RequestInterface::class, true))
         {
-            return true;
+            return $parameterClass;
         }
     
         return false;

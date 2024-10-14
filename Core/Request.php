@@ -2,7 +2,27 @@
 
 namespace Core;
 
-class Request {
+class Request implements RequestInterface{
+    public $get;
+    public $post;
+
+    public $headers;
+
+    public $method;
+
+    public $info;
+
+    public $errors;
+
+    public function __construct()
+    {
+        $this->get = $_GET;
+        $this->post = $_POST;
+        $this->headers = getallheaders();
+        $this->method = $_SERVER['REQUEST_METHOD'];
+        $this->info = $_SERVER;
+
+    }
     public function get($key, $default = null) {
         return $_GET[$key] ?? $default;
     }
@@ -21,5 +41,10 @@ class Request {
 
     public function method() {
         return $_SERVER['REQUEST_METHOD'];
+    }
+
+    public function authorize()    
+    {
+        return true;
     }
 }
