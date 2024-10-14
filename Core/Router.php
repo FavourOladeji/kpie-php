@@ -3,6 +3,8 @@
 namespace Core;
 
 use App\Http\Middleware\Middleware;
+use Core\Requests\FormRequestInterface;
+use Core\Requests\RequestInterface;
 use Exception;
 use ReflectionMethod;
 
@@ -104,7 +106,7 @@ class Router{
          */
         $requestParameterClass = new $requestParameterClassName();
 
-        if (!$requestParameterClass->authorize())
+        if (is_a($requestParameterClass, FormRequestInterface::class) && !$requestParameterClass->authorize())
         {
             abort(403);
         }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Core;
+namespace Core\Requests;
 
 class Request implements RequestInterface{
     public $get;
@@ -11,8 +11,6 @@ class Request implements RequestInterface{
     public $method;
 
     public $info;
-
-    public $errors;
 
     public function __construct()
     {
@@ -43,8 +41,4 @@ class Request implements RequestInterface{
         return $_SERVER['REQUEST_METHOD'];
     }
 
-    public function authorize()    
-    {
-        return true;
-    }
 }
