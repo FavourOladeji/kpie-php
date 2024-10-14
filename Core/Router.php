@@ -17,7 +17,8 @@ class Router{
             'method' => $method,
             'controller_class' => $controllerClass,
             'controller_method' => $controllerMethod,
-            'middleware' => null
+            'middleware' => null,
+            'name' => null
         ];
     }
     public function get($uri, array $action)
@@ -53,6 +54,11 @@ class Router{
     public function middleware($middleware)
     {
         $this->routes[array_key_last($this->routes)]['middleware'] = $middleware;
+        return $this;
+    }
+    public function name($name)
+    {
+        $this->routes[array_key_last($this->routes)]['name'] = $name;
         return $this;
     }
 
@@ -104,5 +110,13 @@ class Router{
     
         return false;
 
+    }
+
+    public function routeNameExists($name)
+    {
+        $routes = array_filter($this->routes, function ($route) use($name) {
+            return $route['name'] == $name;
+        });
+        return empty($routes) ? false: reset($routes);
     }
 }

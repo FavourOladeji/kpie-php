@@ -1,6 +1,7 @@
 <?php
 
 use Core\App;
+use Core\Router;
 
 if (!function_exists('base_path'))
 {
@@ -88,6 +89,24 @@ function asset($path)
 {
     $appUrl = config('app.url'); 
     return "{$appUrl}/assets/{$path}";
+}
+
+function route($routeName)
+{
+    /**
+     * @var Router
+     */
+    $router = app('router');
+
+    $route = $router->routeNameExists($routeName);
+
+    if (!$routeName || !$route)
+    {
+        throw new Exception("Route name '$routeName' does not exist");
+    }
+    
+    return APP_URL . "/{$route['uri']}";
+
 }
 
 
