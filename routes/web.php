@@ -1,8 +1,8 @@
 <?php
 
 use Core\Router;
-use Http\Controllers\HomePageController;
-use Http\Controllers\LoginController;
+use App\Http\Controllers\HomePageController;
+use App\Http\Controllers\LoginController;
 
 
 /**
