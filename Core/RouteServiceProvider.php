@@ -29,7 +29,23 @@ class RouteServiceProvider
         $router = app('router');
         $uri = parse_url($_SERVER["REQUEST_URI"])['path'];
         $method = $_POST['_method'] ?? $_SERVER['REQUEST_METHOD'];
-       
-        $router->route($uri, $method); 
+
+        // set_error_handler(function($errno, $errstr, $errfile, $errline) {
+        //     // error was suppressed with the @-operator
+        //     if (0 === error_reporting()) {
+        //         return false;
+        //     }
+            
+        //     throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
+        // });
+        
+        try {
+            $router->route($uri, $method); 
+        } catch (\Throwable $th) {
+            throw $th;
+        } catch (\Exception $ex)
+        {
+            throw $ex;
+        }
     }
 }
