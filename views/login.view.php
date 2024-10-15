@@ -23,17 +23,20 @@
         <div class="flex flex-col items-center">
             <h1 class="text-3xl font-semibold text-white">Welcome back</h1>
             <div class="mt-8 w-[477px] text-sm rounded-xl bg-white p-8">
-                <form action="">
+                <form action="<?php echo route('login.store'); ?>" method="post">
                     <div class>
                         <label for="username">Username <sup class="text-red-700">*</sup></label>
-                        <input class="mt-2 h-10 w-full rounded-md border" type="text">
+                        <input class="mt-2 h-10 w-full rounded-md border" name="username" type="text">
+                        <?php foreach (errors('username') ?? [] as $usernameErr): ?>
+                            <span class="text-red"><?php echo $usernameErr; ?></span>
+                        <?php endforeach; ?>
                     </div>
                     <div class="mt-4">
-                        <label for="passeord">Password <sup class="text-red-700">*</sup></label>
-                        <input class="mt-2 h-10 w-full rounded-md border" type="password">
+                        <label for="password">Password <sup class="text-red-700">*</sup></label>
+                        <input class="mt-2 h-10 w-full rounded-md border" name="password" type="password">
                     </div>
 
-                    <button class="text-white rounded-md w-full mt-6 h-10 bg-[#bb8b41]" type="submit">Sign in</button>
+                    <button class="text-white rounded-md w-full mt-6 h-10 bg-[#bb8b41]" name="submit" type="submit">Sign in</button>
                 </form>
 
                 <hr class="my-8 w-full text-gray-100">

@@ -76,7 +76,7 @@ function db()
 
 function view(string $path, array $attributes = [])
 {
-    $viewFilename = base_path("views/{$path}.php");
+    $viewFilename = base_path("views/{$path}.view.php");
     if (!file_exists($viewFilename))
     {
         throw new Exception("The view '$path.php' does not exist");
