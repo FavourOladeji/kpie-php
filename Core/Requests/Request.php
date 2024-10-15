@@ -12,6 +12,8 @@ class Request implements RequestInterface{
 
     public $info;
 
+    public $attributes;
+
     public function __construct()
     {
         $this->get = $_GET;
@@ -19,6 +21,7 @@ class Request implements RequestInterface{
         $this->headers = getallheaders();
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->info = $_SERVER;
+        $this->attributes = static::attributes();
 
     }
     public function get($key, $default = null) {
@@ -39,6 +42,22 @@ class Request implements RequestInterface{
 
     public function method() {
         return $_SERVER['REQUEST_METHOD'];
+    }
+
+    public static function attributes()
+    {
+        switch (strtoupper($_SERVER['REQUEST_METHOD'])) {
+            case 'GET':
+                return $_GET;
+            case 'POST':
+                return $_POST;
+            // case 'PUT':
+            //     parse_str(file_get_contents('php://input'), $this->attributes);
+            //     break;
+            // Add more methods if necessary
+            default:
+               return [];
+        }
     }
 
 }
