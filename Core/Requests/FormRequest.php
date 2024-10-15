@@ -19,20 +19,30 @@ class FormRequest extends Request implements FormRequestInterface
         return [];
     }
 
-    protected function attributes()
+    protected function attributeNames()
     {
         return [];
     }
 
-    public function validate()
+    public function validate(array|string $fields = [])
     {
         $requestRules = $this->rules();
+        if (is_string($fields))
+        {
+            $fields = [$fields];
+        }
+        if ($fields)
+        {
+            $requestRules = array_filter($requestRules, function ($rule, $field) use($fields) {
+                return in_array($field, $fields);
+            }, ARRAY_FILTER_USE_BOTH);
+        } 
         $requestMethod = strtolower($this->method);
         if (!method_exists(self::class, $requestMethod))
         {
             throw new \Exception("Unable to get request parameters");
         }
-        $old = [];
+        $validated = [];
         foreach ($requestRules as $key => $rules) {
             $value = call_user_func_array([self::class, $requestMethod], [$key]);
             // Store the value in a session in case you need to return it back to the user;
@@ -50,9 +60,9 @@ class FormRequest extends Request implements FormRequestInterface
                 if (!$validationResult['success'])
                 {
                     $replace = $key;
-                    if (array_key_exists($key, $this->attributes()))
+                    if (array_key_exists($key, $this->attributeNames()))
                     {
-                        $replace = $this->attributes()[$key];
+                        $replace = $this->attributeNames()[$key];
                     }
                     $message = str_replace('{key}', $replace, $validationResult['message']);
                     $this->errors[$key][] = $message;
@@ -63,8 +73,16 @@ class FormRequest extends Request implements FormRequestInterface
 
         if (!empty($this->errors))
         {
-            ValidationException::throw($this->errors, $old);
+            ValidationException::throw($this->errors);
         }
+        return $validated;
+    }
+
+    public function validated(string|array $fields = [])
+    {
+
+        $validated = $fields ? self::validate($fields): self::validate();
+        return $validated;
     }
 
 }
