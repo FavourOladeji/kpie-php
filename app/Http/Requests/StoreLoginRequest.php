@@ -21,7 +21,7 @@ class StoreLoginRequest extends FormRequest
     }
    
 
-    public function attributes()
+    public function attributeNames()
     {
         return [
             'username' => 'Username',
