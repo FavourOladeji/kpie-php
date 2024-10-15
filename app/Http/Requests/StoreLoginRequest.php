@@ -16,7 +16,7 @@ class StoreLoginRequest extends FormRequest
     {
         return [
             'username' => ['required'],
-            'password' => ['required']
+            'password' => ['required', 'min:7']
         ];
     }
    
