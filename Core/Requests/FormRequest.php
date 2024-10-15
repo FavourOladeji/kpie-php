@@ -78,7 +78,7 @@ class FormRequest extends Request implements FormRequestInterface
         return $validated;
     }
 
-    public function validated(string|array $fields = [])
+    public function validated(string|array $fields = null)
     {
 
         $validated = $fields ? self::validate($fields): self::validate();
