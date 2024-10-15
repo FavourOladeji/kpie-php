@@ -131,11 +131,13 @@ function redirect($path)
 function errors($key)
 {
     $errors = Session::get('errors');
-    if (!$errors)
-    {
-        return null;
-    }
-    return $errors[$key] ?? null;
+    return $errors[$key] ?? [];
+}
+
+function old($key, $default = null)
+{
+    $old = Session::get('old');
+    return $old[$key] ?? $default;
 }
 
 

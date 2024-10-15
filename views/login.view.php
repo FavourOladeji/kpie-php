@@ -12,7 +12,7 @@
     <header class="w-full text-sm font-medium text-white">
         <div class="flex flex-row items-center justify-between px-16 py-12 pb-0">
             <div class="h-[48px]">
-                <img class="h-full" src="<?php echo asset('images/logo.png'); ?>" alt="">
+                <img class="h-full" src="<?= asset('images/logo.png') ?>" alt="">
             </div>
             <div>
                 <p>Having trouble? <a href="" class="text-[#bb8b41]">Contact us</a></p>
@@ -23,10 +23,10 @@
         <div class="flex flex-col items-center">
             <h1 class="text-3xl font-semibold text-white">Welcome back</h1>
             <div class="mt-8 w-[477px] text-sm rounded-xl bg-white p-8">
-                <form action="<?php echo route('login.store'); ?>" method="post">
+                <form action="<?= route('login.store') ?>" method="post">
                     <div class>
                         <label for="username">Username <sup class="text-red-700">*</sup></label>
-                        <input class="mt-2 h-10 w-full rounded-md border" name="username" type="text">
+                        <input class="mt-2 h-10 w-full rounded-md border" name="username" type="text" value="<?= old('username') ?>">
                         <?php component('error', ['errors' => errors('username')]); ?>
                     </div>
                     <div class="mt-4">
