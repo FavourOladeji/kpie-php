@@ -86,6 +86,18 @@ function view(string $path, array $attributes = [])
     require_once $viewFilename;
 }
 
+function component(string $componentName, array $attributes)
+{
+    $viewFilename = base_path("views/includes/{$componentName}.view.php");
+    if (!file_exists($viewFilename))
+    {
+        throw new Exception("The view '$componentName.php' does not exist");
+    }
+    
+    extract($attributes);
+    include $viewFilename;
+}
+
 function asset($path)
 {
     $appUrl = config('app.url'); 

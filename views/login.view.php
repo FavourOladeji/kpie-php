@@ -27,13 +27,12 @@
                     <div class>
                         <label for="username">Username <sup class="text-red-700">*</sup></label>
                         <input class="mt-2 h-10 w-full rounded-md border" name="username" type="text">
-                        <?php foreach (errors('username') ?? [] as $usernameErr): ?>
-                            <span class="text-red"><?php echo $usernameErr; ?></span>
-                        <?php endforeach; ?>
+                        <?php component('error', ['errors' => errors('username')]); ?>
                     </div>
                     <div class="mt-4">
                         <label for="password">Password <sup class="text-red-700">*</sup></label>
                         <input class="mt-2 h-10 w-full rounded-md border" name="password" type="password">
+                        <?php component('error', ['errors' => errors('password')]); ?>
                     </div>
 
                     <button class="text-white rounded-md w-full mt-6 h-10 bg-[#bb8b41]" name="submit" type="submit">Sign in</button>
