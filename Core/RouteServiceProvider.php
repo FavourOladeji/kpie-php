@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use Core\Exceptions\ValidationException;
+
 class RouteServiceProvider
 {
     /**
@@ -41,9 +43,13 @@ class RouteServiceProvider
         
         try {
             $router->route($uri, $method); 
+        } catch (ValidationException $ex)
+        {
+            return redirect($router->previousUrl());
         } catch (\Throwable $th) {
             throw $th;
-        } catch (\Exception $ex)
+        }
+         catch (\Exception $ex)
         {
             throw $ex;
         }
