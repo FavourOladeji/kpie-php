@@ -2,6 +2,7 @@
 
 use Core\App;
 use Core\Router;
+use Core\Session;
 
 if (!function_exists('base_path'))
 {
@@ -107,6 +108,22 @@ function route($routeName)
     
     return APP_URL . "/{$route['uri']}";
 
+}
+
+function redirect($path)
+{
+    header("location: {$path}");
+    exit();
+}
+
+function errors($key)
+{
+    $errors = Session::get('errors');
+    if (!$errors)
+    {
+        return null;
+    }
+    return $errors[$key] ?? null;
 }
 
 
