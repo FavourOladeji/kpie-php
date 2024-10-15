@@ -12,6 +12,7 @@ $router = app('router');
 
 
 $router->get('login', [LoginController::class, 'index'])->middleware('auth');
+$router->post('login', [LoginController::class, 'store'])->middleware('auth')->name('login.store');
 $router->get('', [HomePageController::class, 'index']);
 
 
