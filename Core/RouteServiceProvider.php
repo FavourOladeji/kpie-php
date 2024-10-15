@@ -42,16 +42,24 @@ class RouteServiceProvider
         // });
         
         try {
+            ob_start();
             $router->route($uri, $method); 
         } catch (ValidationException $ex)
         {
             return redirect($router->previousUrl());
         } catch (\Throwable $th) {
+            ob_end_clean();
             throw $th;
         }
          catch (\Exception $ex)
         {
-            throw $ex;
+            ob_end_clean();
+
+            dd('shitttt');
+
+            // return redirect('error');
+            echo "here";
+            // throw $ex;
         }
     }
 }
