@@ -91,28 +91,27 @@ class Router{
             throw new Exception("Method '$controllerMethod' does not exist in controller class '$controllerClass'");
         }
 
-        
 
         $requestParameterClassName = $this->checkIfControllerHasRequestParameter($controllerClass, $controllerMethod);
         
         $controller = new $controllerClass();
-        if (!$requestParameterClassName)
+        if ($requestParameterClassName)
         {
+            /**
+            * @var RequestInterface
+            */
+            $requestParameterClass = new $requestParameterClassName();
+
+            if (is_a($requestParameterClass, FormRequestInterface::class) && !$requestParameterClass->authorize())
+            {
+                abort(403);
+            }
+
+            $controller->{$controllerMethod}($requestParameterClass);
+        } else {
             $controller->{$controllerMethod}();
-            die();
         }
-        /**
-         * @var RequestInterface
-         */
-        $requestParameterClass = new $requestParameterClassName();
-
-        if (is_a($requestParameterClass, FormRequestInterface::class) && !$requestParameterClass->authorize())
-        {
-            abort(403);
-        }
-
-        $controller->{$controllerMethod}($requestParameterClass);
-        die();
+       
         
     }
 
@@ -136,5 +135,10 @@ class Router{
             return $route['name'] == $name;
         });
         return empty($routes) ? false: reset($routes);
+    }
+
+    public function previousUrl()
+    {
+        return $_SERVER['HTTP_REFERER'];
     }
 }
