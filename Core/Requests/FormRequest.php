@@ -46,7 +46,7 @@ class FormRequest extends Request implements FormRequestInterface
         foreach ($requestRules as $key => $rules) {
             $value = call_user_func_array([self::class, $requestMethod], [$key]);
             // Store the value in a session in case you need to return it back to the user;
-            $old[$key] = $value;
+            $validated[$key] = $value;
             foreach ($rules as $rule)
             {
                 $rule = explode(':', $rule);
