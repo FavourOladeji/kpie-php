@@ -12,10 +12,9 @@ class LoginController{
     }
     public function store(StoreLoginRequest $request)
     {
-        // dd($request);
         // Validate the fields
-        $request->validate('post');
-        dd($request->errors);
+        $request->validate();
+
         //Check the database and verify the record 
 
         //redirect appropriately 
