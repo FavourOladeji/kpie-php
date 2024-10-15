@@ -24,6 +24,7 @@
             <h1 class="text-3xl font-semibold text-white">Welcome back</h1>
             <div class="mt-8 w-[477px] text-sm rounded-xl bg-white p-8">
                 <form action="<?= route('login.store') ?>" method="post">
+                    <?= csrfToken() ?>
                     <div class>
                         <label for="username">Username <sup class="text-red-700">*</sup></label>
                         <input class="mt-2 h-10 w-full rounded-md border" name="username" type="text" value="<?= old('username') ?>">

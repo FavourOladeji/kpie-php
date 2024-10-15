@@ -1,6 +1,7 @@
 <?php
 
 use Core\App;
+use Core\Database;
 use Core\Router;
 use Core\Session;
 
@@ -69,7 +70,7 @@ function app($key=null)
     return $key ? $app->make($key) : $app;
 }
 
-function db()
+function db(): Database
 {
     return app('database');
 }
@@ -143,5 +144,10 @@ function old($key, $default = null)
     return $old[$key] ?? $default;
 }
 
-
+function csrfToken()
+{
+    $csrfToken = bin2hex(random_bytes(32));
+    Session::put('csrf_token', $csrfToken);
+    return "<input type='hidden' name='csrf_token' value='$csrfToken'/>";
+}
 
