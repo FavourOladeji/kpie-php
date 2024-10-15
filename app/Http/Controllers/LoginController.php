@@ -8,7 +8,7 @@ use Core\Requests\Request;
 class LoginController{
     public function index(Request $request)
     {
-        view('login');
+        return view('login');
     }
     public function store(StoreLoginRequest $request)
     {

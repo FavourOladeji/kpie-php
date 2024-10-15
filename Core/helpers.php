@@ -79,11 +79,13 @@ function view(string $path, array $attributes = [])
     $viewFilename = base_path("views/{$path}.view.php");
     if (!file_exists($viewFilename))
     {
-        throw new Exception("The view '$path.php' does not exist");
+        throw new Exception("The view '$path.view.php' does not exist");
     }
     
     extract($attributes);
-    require_once $viewFilename;
+    return include $viewFilename;
+
+    
 }
 
 function component(string $componentName, array $attributes)
@@ -91,11 +93,11 @@ function component(string $componentName, array $attributes)
     $viewFilename = base_path("views/includes/{$componentName}.view.php");
     if (!file_exists($viewFilename))
     {
-        throw new Exception("The view '$componentName.php' does not exist");
+        throw new Exception("The component '$componentName.php' does not exist");
     }
     
     extract($attributes);
-    include $viewFilename;
+    return include $viewFilename;
 }
 
 function asset($path)
@@ -136,6 +138,7 @@ function errors($key)
 
 function old($key, $default = null)
 {
+    // throw new Exception('fuck you');
     $old = Session::get('old');
     return $old[$key] ?? $default;
 }
