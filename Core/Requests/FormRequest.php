@@ -39,11 +39,14 @@ class FormRequest extends Request implements FormRequestInterface
             $old[$key] = $value;
             foreach ($rules as $rule)
             {
-                if (!method_exists(Validator::class, $rule))
+                $rule = explode(':', $rule);
+                $method = $rule[0];
+                $arguments = $rule[1] ?? null;
+                if (!method_exists(Validator::class, $method))
                 {
-                    throw new \Exception("The validation rule '$rule' does not exist");
+                    throw new \Exception("The validation rule '$method' does not exist");
                 }
-                $validationResult = call_user_func_array([Validator::class, $rule], [$value]);
+                $validationResult = call_user_func_array([Validator::class, $method], [$value, $arguments]);
                 if (!$validationResult['success'])
                 {
                     $replace = $key;
