@@ -135,7 +135,7 @@ function redirect($path)
 function to_route($routeName)
 {
     $path = route($routeName);
-    redirect($path);
+    return redirect($path);
 }
 
 function errors($key)
@@ -163,3 +163,7 @@ function auth()
     return new Auth();
 }
 
+function isGuest()
+{
+    return auth()->id() ? false : true;
+}
