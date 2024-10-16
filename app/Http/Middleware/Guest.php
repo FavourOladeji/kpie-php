@@ -6,6 +6,11 @@ class Guest implements MiddlewareInterface
 {
     public function handle()
     {
-       var_dump('here');
+        if (!isGuest())
+        {
+            return to_route('home');
+        }
+        
+        return true;
     }
 }
