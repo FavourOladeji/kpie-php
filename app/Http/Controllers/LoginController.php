@@ -27,4 +27,10 @@ class LoginController{
         //redirect appropriately 
         return to_route('home');
     }
+
+    public function logout(Request $request)
+    {
+        auth()->logout();
+        return to_route('home');
+    }
 }

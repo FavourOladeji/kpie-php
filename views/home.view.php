@@ -32,8 +32,11 @@
                 <a href="">Banking</a>
                 <a href="">Company</a>
                 <?php if (isGuest()) : ?> 
-                    <a href="" class="text-[color:--gold]">Login</a>
+                    <a href="<?= route('login') ?>" class="text-[color:--gold]">Login</a>
                     <button class="bg-[color:--gold] rounded-3xl px-4 p-2">Get started</button>
+                <?php endif; ?>
+                <?php if (!isGuest()) : ?> 
+                    <a href="<?= route('logout') ?>" class="text-[color:--gold]">Logout</a>
                 <?php endif; ?>
                 <img class="size-4" src="<?php echo asset('images/search.svg');?>" alt="">
             </div>

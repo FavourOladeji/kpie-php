@@ -11,9 +11,10 @@ use App\Http\Controllers\LoginController;
 $router = app('router');
 
 
-$router->get('login', [LoginController::class, 'index'])->middleware('guest');
+$router->get('login', [LoginController::class, 'index'])->middleware('guest')->name('login');
+$router->post('login', [LoginController::class, 'store'])->middleware('guest')->name('login.store');
+$router->get('logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
 $router->get('error', [LoginController::class, 'error']);
-$router->post('login', [LoginController::class, 'store'])->middleware('gest')->name('login.store');
 $router->get('', [HomePageController::class, 'index'])->name('home');
 
 

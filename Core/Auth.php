@@ -33,4 +33,9 @@ class Auth
     {
         return Session::get('user_id');
     }
+
+    public static function logout()
+    {
+        Session::destroy();
+    }
 }
