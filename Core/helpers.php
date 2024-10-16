@@ -1,6 +1,7 @@
 <?php
 
 use Core\App;
+use Core\Auth;
 use Core\Database;
 use Core\Router;
 use Core\Session;
@@ -131,6 +132,12 @@ function redirect($path)
     exit();
 }
 
+function to_route($routeName)
+{
+    $path = route($routeName);
+    redirect($path);
+}
+
 function errors($key)
 {
     $errors = Session::get('errors');
@@ -149,5 +156,10 @@ function csrfToken()
     $csrfToken = bin2hex(random_bytes(32));
     Session::put('csrf_token', $csrfToken);
     return "<input type='hidden' name='csrf_token' value='$csrfToken'/>";
+}
+
+function auth()
+{
+    return new Auth();
 }
 
