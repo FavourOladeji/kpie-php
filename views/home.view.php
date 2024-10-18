@@ -25,15 +25,19 @@
     <header class="h-[74px] flex justify-center text-base font-medium text-white">
         <div class="h-full pt-4 px-6 max-w-[1248px] w-full  flex flex-row items-center justify-between items-center">
             <div class="w-[135px]">
-                <img class="h-full" src="<?php echo asset('images/logo.png'); ?>" alt="">
+                <a href="<?= route('home') ?>">
+                    <img class="h-full" src="<?php echo asset('images/logo.png'); ?>" alt="">
+                </a>    
             </div>
             <div class="flex flex-row space-x-5 items-center h-full">
                 <a href="">Investment Services</a>
                 <a href="">Banking</a>
                 <a href="">Company</a>
                 <?php if (isGuest()) : ?> 
-                    <a href="<?= route('login') ?>" class="text-[color:--gold]">Login</a>
-                    <button class="bg-[color:--gold] rounded-3xl px-4 p-2">Get started</button>
+                    <a href="<?= route('login'); ?>" class="text-[color:--gold]">Login</a>
+                    <a href="<?= route('register') ?>">
+                        <button class="bg-[color:--gold] rounded-3xl px-4 p-2">Get started</button>
+                    </a>
                 <?php endif; ?>
                 <?php if (!isGuest()) : ?> 
                     <a href="<?= route('logout') ?>" class="text-[color:--gold]">Logout</a>

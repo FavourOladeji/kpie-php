@@ -12,7 +12,9 @@
     <header class="w-full text-sm font-medium text-white">
         <div class="flex flex-row items-center justify-between px-16 py-12 pb-0">
             <div class="h-[48px]">
-                <img class="h-full" src="<?= asset('images/logo.png') ?>" alt="">
+                <a href="<?= route('home') ?>">
+                    <img class="h-full" src="<?= asset('images/logo.png') ?>" alt="">
+                </a>
             </div>
             <div>
                 <p>Having trouble? <a href="" class="text-[#bb8b41]">Contact us</a></p>
